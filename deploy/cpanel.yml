@@ -1,0 +1,13 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/teddyxmd/home/teddyxmd-session/public_html/
+    - /bin/cp -R images $DEPLOYPATH
+    
+
+
+
+
+
+
+

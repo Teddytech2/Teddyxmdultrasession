@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>TEDDY-XMD-ULTRA | Pair Code Login</title>
+  <meta name="description" content="Generate a WhatsApp pairing code for TEDDY-XMD-ULTRA by Teddy Tech.">
+  <meta name="theme-color" content="#080808">
+
+  <link rel="icon" href="https://url.bmbxmd.workers.dev/1JNK9.jpg">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    * {
+      font-family: 'Inter', sans-serif;
+      box-sizing: border-box;
+    }
+
+    body {
+      color: #e5e7eb;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(0, 0, 0, .91),
+          rgba(8, 8, 8, .80),
+          rgba(0, 0, 0, .93)
+        ),
+        url('https://url.bmbxmd.workers.dev/1JNK9.jpg');
+
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+    }
+
+    .gold-text {
+      background: linear-gradient(135deg, #ffe69a, #f5c542, #d4a017);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .brand-font {
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .card {
+      background: rgba(12, 12, 12, .88);
+      border: 1px solid rgba(245, 197, 66, .25);
+      border-radius: 1.25rem;
+      box-shadow: 0 20px 70px rgba(0, 0, 0, .35);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #ffe69a, #f5c542, #d4a017);
+      color: #14100a;
+      font-weight: 800;
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(245, 197, 66, .25);
+    }
+
+    .btn-gold:disabled {
+      opacity: .55;
+      transform: none;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #f5c542 !important;
+      box-shadow: 0 0 0 3px rgba(245, 197, 66, .12);
+    }
+
+    .shake {
+      animation: shake .45s;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
+    }
+
+    #pairCode {
+      letter-spacing: .3em;
+      font-family: 'Courier New', monospace;
+      overflow-wrap: anywhere;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .brand-logo {
+      width: 42px;
+      height: 42px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid rgba(245, 197, 66, .8);
+      box-shadow: 0 0 18px rgba(245, 197, 66, .15);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: #38e879;
+      border-radius: 50%;
+      display: inline-block;
+      box-shadow: 0 0 10px rgba(56, 232, 121, .7);
+    }
+
+    .developer-link {
+      transition: color .2s, border-color .2s, background .2s;
+    }
+
+    .developer-link:hover {
+      color: #ffe69a;
+      border-color: rgba(245, 197, 66, .65);
+      background: rgba(245, 197, 66, .08);
+    }
+
+    @media (max-width: 480px) {
+      #pairCode {
+        font-size: 1.65rem;
+        letter-spacing: .2em;
+      }
+
+      .card {
+        border-radius: 1rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+
+  <!-- Navigation -->
+  <nav class="flex items-center justify-between gap-3 px-5 md:px-12 py-5 border-b border-yellow-500/20 bg-black/50 backdrop-blur-xl">
+
+    <a href="/" class="flex items-center gap-3 no-underline min-w-0">
+      <img
+        src="https://url.bmbxmd.workers.dev/1JNK9.jpg"
+        alt="TEDDY-XMD-ULTRA Logo"
+        class="brand-logo"
+      >
+
+      <div>
+        <div class="brand-font font-extrabold text-sm sm:text-lg">
+          TEDDY-XMD-<span class="gold-text">ULTRA</span>
+        </div>
+
+        <div class="text-gray-400 text-[9px] sm:text-[10px] tracking-[2px] mt-1">
+          POWERED BY TEDDY TECH
+        </div>
+      </div>
+    </a>
+
+    <a
+      href="__BOT_REPO__"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="text-gray-400 hover:text-yellow-400 text-sm no-underline flex items-center gap-2"
+    >
+      <i class="fab fa-github"></i>
+      <span class="hidden sm:inline">Source</span>
+    </a>
+  </nav>
+
+  <!-- Main -->
+  <main class="flex-1 flex items-center justify-center px-5 py-12">
+
+    <div class="max-w-lg w-full">
+
+      <!-- Form -->
+      <div id="formSection" class="card p-6 sm:p-8 md:p-10">
+
+        <div class="flex items-center gap-2 text-xs text-yellow-200 mb-5">
+          <span class="status-dot"></span>
+          WHATSAPP SESSION GENERATOR
+        </div>
+
+        <h1 class="text-2xl sm:text-3xl font-extrabold brand-font leading-relaxed">
+          Pair Code <span class="gold-text">Login</span>
+        </h1>
+
+        <p class="text-gray-400 text-sm mt-3 leading-7">
+          Enter your WhatsApp number with the country code, without the
+          <span class="text-yellow-300 font-semibold">+</span> sign.
+        </p>
+
+        <div
+          id="phoneError"
+          class="hidden mt-4 text-sm text-red-400 bg-red-500/10 border border-red-500/25 rounded-lg px-4 py-3"
+          role="alert"
+        >
+          <i class="fas fa-circle-exclamation mr-2"></i>
+          <span id="phoneErrorText"></span>
+        </div>
+
+        <input
+          id="phoneNumber"
+          type="tel"
+          inputmode="numeric"
+          autocomplete="tel"
+          placeholder="e.g. 254712345678"
+          maxlength="15"
+          aria-label="WhatsApp phone number"
+          class="w-full mt-5 bg-black/70 border border-yellow-500/25 rounded-xl px-5 py-4 text-lg tracking-wider text-center text-yellow-100 placeholder-gray-600 transition"
+        >
+
+        <button
+          id="submitBtn"
+          type="button"
+          class="btn-gold w-full rounded-xl py-4 mt-6 text-base"
+        >
+          <span id="btnContent">
+            <i class="fas fa-bolt mr-2"></i>Get Pair Code
+          </span>
+
+          <span id="btnLoading" class="hidden">
+            <i class="fas fa-circle-notch fa-spin mr-2"></i>
+            Requesting…
+          </span>
+        </button>
+
+        <div
+          id="generalError"
+          class="hidden mt-4 text-sm text-red-400 bg-red-500/10 border border-red-500/25 rounded-lg px-4 py-3"
+          role="alert"
+        ></div>
+
+        <div class="mt-6 p-4 rounded-xl bg-yellow-500/5 border border-yellow-500/10">
+          <p class="text-gray-400 text-xs leading-6">
+            <i class="fas fa-mobile-screen-button text-yellow-400 mr-2"></i>
+            Open WhatsApp → Settings → Linked Devices → Link a Device,
+            then enter the pairing code.
+          </p>
+        </div>
+
+        <p class="text-gray-500 text-xs mt-5 text-center leading-6">
+          Keep your pairing code private. Only enter it in the official WhatsApp app.
+        </p>
+      </div>
+
+      <!-- Result -->
+      <div id="resultSection" class="hidden card p-6 sm:p-8 md:p-10 text-center">
+
+        <div class="w-14 h-14 rounded-full bg-yellow-500/15 border border-yellow-500/40 flex items-center justify-center mx-auto">
+          <i class="fas fa-check text-yellow-400 text-xl"></i>
+        </div>
+
+        <h2 class="text-xl font-extrabold mt-5">
+          Your <span class="gold-text">Pair Code</span>
+        </h2>
+
+        <p class="text-gray-400 text-sm mt-2">
+          Enter this code in WhatsApp to link your device.
+        </p>
+
+        <div
+          id="pairCode"
+          class="text-3xl md:text-4xl font-bold text-yellow-300 bg-black/70 border border-yellow-500/25 rounded-xl py-5 px-3 mt-6 select-all"
+          aria-live="polite"
+        >----</div>
+
+        <p class="text-gray-500 text-xs mt-3">
+          Use the code promptly. It may expire.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-3 mt-7">
+
+          <button
+            id="copyBtn"
+            type="button"
+            class="btn-gold flex-1 rounded-xl py-3.5 text-sm"
+          >
+            <i class="far fa-copy mr-2"></i>
+            <span id="copyText">Copy Code</span>
+          </button>
+
+          <button
+            id="newCodeBtn"
+            type="button"
+            class="flex-1 rounded-xl py-3.5 text-sm font-semibold border border-yellow-500/35 text-yellow-400 hover:bg-yellow-500/10"
+          >
+            <i class="fas fa-rotate mr-2"></i>
+            New Code
+          </button>
+
+        </div>
+      </div>
+
+      <!-- Developer contact -->
+      <div class="text-center mt-7">
+        <p class="text-gray-400 text-xs mb-3">
+          Need assistance with pairing?
+        </p>
+
+        <a
+          href="https://wa.me/254799963583?text=Hello%20Teddy%20Tech%2C%20I%20need%20help%20with%20TEDDY-XMD-ULTRA%20pairing."
+          target="_blank"
+          rel="noopener noreferrer"
+          class="developer-link inline-flex items-center justify-center gap-2 border border-yellow-500/25 rounded-xl px-5 py-3 text-sm text-yellow-400"
+        >
+          <i class="fab fa-whatsapp text-lg"></i>
+          Contact Teddy Tech
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="px-6 py-6 border-t border-yellow-500/15 bg-black/60 text-center">
+
+    <div class="brand-font text-sm font-bold gold-text">
+      TEDDY-XMD-ULTRA
+    </div>
+
+    <p class="text-gray-500 text-xs mt-2">
+      Powered by Teddy Tech
+    </p>
+
+    <div class="flex flex-wrap justify-center gap-5 mt-4 text-xs">
+      <a
+        href="https://wa.me/254799963583"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-gray-400 hover:text-yellow-400"
+      >
+        <i class="fab fa-whatsapp mr-1"></i> Developer
+      </a>
+
+      <a
+        href="https://whatsapp.com/channel/0029Vb6NveDBPzjPa4vIRt3n"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-gray-400 hover:text-yellow-400"
+      >
+        <i class="fas fa-bullhorn mr-1"></i> Channel
+      </a>
+
+      <a
+        href="https://github.com/Teddyxmd/TEDDY-XMD"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-gray-400 hover:text-yellow-400"
+      >
+        <i class="fab fa-github mr-1"></i> GitHub
+      </a>
+    </div>
+
+    <p class="text-gray-600 text-xs mt-5">
+      &copy; <span id="yr"></span> TEDDY-XMD-ULTRA. All rights reserved.
+    </p>
+
+  </footer>
+
+  <script>
+    document.getElementById('yr').textContent = new Date().getFullYear();
+
+    const phoneInput = document.getElementById('phoneNumber');
+    const submitBtn = document.getElementById('submitBtn');
+    const btnContent = document.getElementById('btnContent');
+    const btnLoading = document.getElementById('btnLoading');
+
+    const phoneError = document.getElementById('phoneError');
+    const phoneErrTxt = document.getElementById('phoneErrorText');
+    const generalError = document.getElementById('generalError');
+
+    const formSection = document.getElementById('formSection');
+    const resultSection = document.getElementById('resultSection');
+
+    const pairCode = document.getElementById('pairCode');
+    const copyBtn = document.getElementById('copyBtn');
+    const copyText = document.getElementById('copyText');
+    const newCodeBtn = document.getElementById('newCodeBtn');
+
+    let requestInProgress = false;
+
+    phoneInput.addEventListener('input', () => {
+      phoneInput.value = phoneInput.value.replace(/\D/g, '');
+      phoneError.classList.add('hidden');
+      generalError.classList.add('hidden');
+    });
+
+    phoneInput.addEventListener('keydown', event => {
+      if (event.key === 'Enter') {
+        submitBtn.click();
+      }
+    });
+
+    function showPhoneError(message) {
+      phoneErrTxt.textContent = message;
+      phoneError.classList.remove('hidden');
+
+      phoneInput.classList.add('shake');
+
+      setTimeout(() => {
+        phoneInput.classList.remove('shake');
+      }, 450);
+    }
+
+    function setLoading(isLoading) {
+      btnContent.classList.toggle('hidden', isLoading);
+      btnLoading.classList.toggle('hidden', !isLoading);
+      submitBtn.disabled = isLoading;
+    }
+
+    submitBtn.addEventListener('click', async () => {
+      if (requestInProgress) return;
+
+      const number = phoneInput.value.trim();
+
+      if (!number || number.length < 10 || number.length > 15) {
+        showPhoneError('Enter a valid phone number (10–15 digits, without the + sign).');
+        return;
+      }
+
+      phoneError.classList.add('hidden');
+      generalError.classList.add('hidden');
+
+      requestInProgress = true;
+      setLoading(true);
+
+      try {
+        const response = await fetch(
+          `/code?number=${encodeURIComponent(number)}`,
+          {
+            method: 'GET',
+            headers: {
+              'Accept': 'application/json'
+            }
+          }
+        );
+
+        const contentType = response.headers.get('content-type') || '';
+
+        if (!contentType.includes('application/json')) {
+          throw new Error(
+            'The server returned an unexpected response. Check that the pairing API is running.'
+          );
+        }
+
+        const data = await response.json();
+        const code = String(data.code || '').trim();
+
+        if (!response.ok || !code ||
+            /error|unavailable/i.test(code)) {
+          throw new Error(
+            code || data.error || 'Service unavailable. Please try again.'
+          );
+        }
+
+        pairCode.textContent = code;
+        formSection.classList.add('hidden');
+        resultSection.classList.remove('hidden');
+
+      } catch (error) {
+        generalError.textContent =
+          error.message || 'Failed to get a pairing code. Please try again.';
+
+        generalError.classList.remove('hidden');
+
+      } finally {
+        requestInProgress = false;
+        setLoading(false);
+      }
+    });
+
+    copyBtn.addEventListener('click', async () => {
+      const code = pairCode.textContent.trim();
+
+      try {
+        await navigator.clipboard.writeText(code);
+        copyText.textContent = 'Copied!';
+
+      } catch {
+        // Fallback for browsers where Clipboard API is unavailable.
+        const selection = window.getSelection();
+        const range = document.createRange();
+
+        range.selectNodeContents(pairCode);
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        copyText.textContent = 'Select and Copy';
+      }
+
+      setTimeout(() => {
+        copyText.textContent = 'Copy Code';
+      }, 2500);
+    });
+
+    newCodeBtn.addEventListener('click', () => {
+      resultSection.classList.add('hidden');
+      formSection.classList.remove('hidden');
+
+      phoneError.classList.add('hidden');
+      generalError.classList.add('hidden');
+
+      pairCode.textContent = '----';
+      phoneInput.value = '';
+      phoneInput.focus();
+    });
+  </script>
+
+</body>
+</html>

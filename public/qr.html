@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>TEDDY-XMD-ULTRA | QR Code Login</title>
+  <meta name="description" content="Scan a QR code to link your WhatsApp account to TEDDY-XMD-ULTRA by Teddy Tech.">
+  <meta name="theme-color" content="#080808">
+
+  <link rel="icon" href="https://url.bmbxmd.workers.dev/1JNK9.jpg">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    * {
+      font-family: 'Inter', sans-serif;
+      box-sizing: border-box;
+    }
+
+    body {
+      color: #e5e7eb;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(0, 0, 0, .91),
+          rgba(8, 8, 8, .80),
+          rgba(0, 0, 0, .93)
+        ),
+        url('https://url.bmbxmd.workers.dev/1JNK9.jpg');
+
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+    }
+
+    .gold-text {
+      background: linear-gradient(135deg, #ffe69a, #f5c542, #d4a017);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .brand-font {
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .card {
+      background: rgba(12, 12, 12, .88);
+      border: 1px solid rgba(245, 197, 66, .25);
+      border-radius: 1.25rem;
+      box-shadow: 0 20px 70px rgba(0, 0, 0, .35);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #ffe69a, #f5c542, #d4a017);
+      color: #14100a;
+      font-weight: 800;
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(245, 197, 66, .25);
+    }
+
+    .btn-gold:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .brand-logo {
+      width: 42px;
+      height: 42px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid rgba(245, 197, 66, .8);
+      box-shadow: 0 0 18px rgba(245, 197, 66, .15);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      display: inline-block;
+      background: #38e879;
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(56, 232, 121, .7);
+    }
+
+    .developer-link {
+      transition: color .2s, border-color .2s, background .2s;
+    }
+
+    .developer-link:hover {
+      color: #ffe69a;
+      border-color: rgba(245, 197, 66, .65);
+      background: rgba(245, 197, 66, .08);
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        border-radius: 1rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+
+  <!-- Navigation -->
+  <nav class="flex items-center justify-between gap-3 px-5 md:px-12 py-5 border-b border-yellow-500/20 bg-black/50 backdrop-blur-xl">
+
+    <a href="/" class="flex items-center gap-3 no-underline min-w-0">
+      <img
+        src="https://url.bmbxmd.workers.dev/1JNK9.jpg"
+        alt="TEDDY-XMD-ULTRA Logo"
+        class="brand-logo"
+      >
+
+      <div>
+        <div class="brand-font font-extrabold text-sm sm:text-lg">
+          TEDDY-XMD-<span class="gold-text">ULTRA</span>
+        </div>
+
+        <div class="text-gray-400 text-[9px] sm:text-[10px] tracking-[2px] mt-1">
+          POWERED BY TEDDY TECH
+        </div>
+      </div>
+    </a>
+
+    <a
+      href="__BOT_REPO__"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="text-gray-400 hover:text-yellow-400 text-sm no-underline flex items-center gap-2"
+    >
+      <i class="fab fa-github"></i>
+      <span class="hidden sm:inline">Source</span>
+    </a>
+  </nav>
+
+  <!-- Main -->
+  <main class="flex-1 flex items-center justify-center px-5 py-12">
+
+    <div class="max-w-lg w-full">
+
+      <div class="card p-6 sm:p-8 md:p-10 text-center">
+
+        <div class="flex items-center justify-center gap-2 text-xs text-yellow-200 mb-6">
+          <span class="status-dot"></span>
+          WHATSAPP SESSION GENERATOR
+        </div>
+
+        <div class="flex justify-center mb-6">
+          <img
+            src="https://url.bmbxmd.workers.dev/1JNK9.jpg"
+            alt="TEDDY-XMD-ULTRA"
+            class="w-20 h-20 rounded-full object-cover border-2 border-yellow-500/70 shadow-lg"
+          >
+        </div>
+
+        <h1 class="brand-font text-2xl sm:text-3xl font-extrabold leading-relaxed">
+          QR <span class="gold-text">Login</span>
+        </h1>
+
+        <p class="text-gray-400 text-sm mt-3 leading-7">
+          Connect your WhatsApp account to TEDDY-XMD-ULTRA by scanning
+          the QR code with your phone.
+        </p>
+
+        <div class="mt-7 p-4 rounded-xl bg-yellow-500/5 border border-yellow-500/15 text-left">
+          <p class="text-gray-300 text-xs leading-6">
+            <i class="fas fa-shield-halved text-yellow-400 mr-2"></i>
+            Only scan a QR code generated by your own trusted session
+            server. Never share your linked-device QR code with anyone.
+          </p>
+        </div>
+
+        <button
+          id="generateBtn"
+          type="button"
+          onclick="startQR()"
+          class="btn-gold w-full rounded-xl py-4 mt-7 text-base"
+        >
+          <i class="fas fa-qrcode mr-2"></i>
+          <span id="buttonText">Generate QR Code</span>
+        </button>
+
+        <div
+          id="errorMessage"
+          class="hidden mt-4 text-sm text-red-400 bg-red-500/10 border border-red-500/25 rounded-lg px-4 py-3 text-left"
+          role="alert"
+        ></div>
+
+        <p class="text-gray-500 text-xs mt-6 leading-6">
+          WhatsApp → <span class="text-gray-300">Settings → Linked Devices → Link a Device</span>
+          → scan the QR code.
+        </p>
+
+      </div>
+
+      <!-- Developer Contact -->
+      <div class="text-center mt-7">
+        <p class="text-gray-400 text-xs mb-3">
+          Need help connecting your WhatsApp?
+        </p>
+
+        <a
+          href="https://wa.me/254799963583?text=Hello%20Teddy%20Tech%2C%20I%20need%20help%20with%20TEDDY-XMD-ULTRA%20QR%20login."
+          target="_blank"
+          rel="noopener noreferrer"
+          class="developer-link inline-flex items-center justify-center gap-2 border border-yellow-500/25 rounded-xl px-5 py-3 text-sm text-yellow-400"
+        >
+          <i class="fab fa-whatsapp text-lg"></i>
+          Contact Teddy Tech
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="px-6 py-6 border-t border-yellow-500/15 bg-black/60 text-center">
+
+    <div class="brand-font text-sm font-bold gold-text">
+      TEDDY-XMD-ULTRA
+    </div>
+
+    <p class="text-gray-500 text-xs mt-2">
+      Powered by Teddy Tech
+    </p>
+
+    <div class="flex flex-wrap justify-center gap-5 mt-4 text-xs">
+
+      <a
+        href="https://wa.me/254799963583"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-gray-400 hover:text-yellow-400"
+      >
+        <i class="fab fa-whatsapp mr-1"></i> Developer
+      </a>
+
+      <a
+        href="https://whatsapp.com/channel/0029Vb6NveDBPzjPa4vIRt3n"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-gray-400 hover:text-yellow-400"
+      >
+        <i class="fas fa-bullhorn mr-1"></i> Channel
+      </a>
+
+      <a
+        href="https://github.com/Teddyxmd/TEDDY-XMD"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-gray-400 hover:text-yellow-400"
+      >
+        <i class="fab fa-github mr-1"></i> GitHub
+      </a>
+
+    </div>
+
+    <p class="text-gray-600 text-xs mt-5">
+      &copy; <span id="yr"></span> TEDDY-XMD-ULTRA. All rights reserved.
+    </p>
+
+  </footer>
+
+  <script>
+    document.getElementById('yr').textContent = new Date().getFullYear();
+
+    const generateBtn = document.getElementById('generateBtn');
+    const buttonText = document.getElementById('buttonText');
+    const errorMessage = document.getElementById('errorMessage');
+
+    function startQR() {
+      if (generateBtn.disabled) return;
+
+      errorMessage.classList.add('hidden');
+      errorMessage.textContent = '';
+
+      generateBtn.disabled = true;
+      buttonText.innerHTML =
+        '<i class="fas fa-circle-notch fa-spin mr-2"></i>Opening QR Generator…';
+
+      // Preserve the existing backend QR-session route.
+      window.location.assign('/qr/session');
+    }
+
+    // If navigation fails, restore the button.
+    window.addEventListener('pageshow', () => {
+      generateBtn.disabled = false;
+      buttonText.textContent = 'Generate QR Code';
+    });
+  </script>
+
+</body>
+</html>
