@@ -165,7 +165,7 @@ router.get('/session', async (req, res) => {
                             </head>
                             <body>
                                 <div class="container">
-                                    <h1>JUNE X QR CODE</h1>
+                                    <h1>TEDDY XMD ULTRA QR CODE</h1>
                                     <div class="qr-container">
                                         <div class="qr-code pulse">
                                             <img src="${qrImage}" alt="QR Code"/>
