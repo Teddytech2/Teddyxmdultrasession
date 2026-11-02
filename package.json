@@ -1,16 +1,16 @@
 {
-  "name": "velvet-sparrow-sessions",
+  "name": "teddyxmd-session",
   "main": "./index.js",
   "type": "commonjs",
   "scripts": {
-    "start": "pm2 start index.js --deep-monitoring --attach --name juness",
-    "stop": "pm2 stop juness",
-    "restart": "pm2 restart juness"
+    "start": "node index.js",
+    "stop": "pm2 stop teddyxmd-session",
+    "restart": "pm2 restart teddyxmd-session"
   },
   "author": "eminentboy11",
   "license": "MIT",
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=18"
   },
   "dependencies": {
     "@whiskeysockets/baileys": "npm:baileys@6.7.21",

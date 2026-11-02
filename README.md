@@ -1,8 +1,8 @@
 # velvet-sparrow-sessions
 
-WhatsApp session server for the **June X** fleet — pairing-code + QR login, short session IDs only (`JUNE-X~` + 6 chars), MongoDB or PostgreSQL storage.
+WhatsApp session server for the **TEDDY-XMD** fleet — pairing-code + QR login, short session IDs only (`TEDDY-XMD~` + 6 chars), MongoDB or PostgreSQL storage.
 
-> Forked from [mrfr8nk/sessions-server](https://github.com/mrfr8nk/sessions-server) (MIT). Rebranded for June X — pairing logic unchanged, internals cleaned.
+> Forked from [mrfr8nk/sessions-server](https://github.com/mrfr8nk/sessions-server) (MIT). Rebranded for TEDDY-XMD — pairing logic unchanged, internals cleaned.
 
 ## Endpoints
 
@@ -21,14 +21,14 @@ WhatsApp session server for the **June X** fleet — pairing-code + QR login, sh
 | Var | Default | Notes |
 |---|---|---|
 | `DATABASE_URL` | **required** | `postgresql://…` (Neon/Supabase/…) or `mongodb(srv)://…` (Atlas). Without it pairing is refused — there is no long-session fallback. |
-| `SESSION_PREFIX` | `JUNE-X~` | Session ID prefix |
-| `SESSION_ID_LENGTH` | `6` | Random part length of short IDs (4–20). Default gives 13-char handles (`JUNE-X~abcdef`) |
+| `SESSION_PREFIX` | `TEDDY-XMD~` | Session ID prefix |
+| `SESSION_ID_LENGTH` | `6` | Random part length of short IDs (4–20). Default gives 13-char handles (`TEDDY-XMD~abcdef`) |
 | `GC_JID` | `FiJ0HpoqKOS0llgeS1uydN` | WhatsApp group invite code auto-joined on pair. Empty = disabled. |
 | `BOT_REPO` | this repo | Shown in the session-delivery buttons |
-| `WA_CHANNEL` | June X channel | Shown in the session-delivery buttons |
+| `WA_CHANNEL` | TEDDY-XMD channel | Shown in the session-delivery buttons |
 | `MSG_FOOTER` | `> *JUNE X SESSIONS*` | Footer on delivered messages |
 | `DEBUG` | `false` | `true` = full per-event pairing logs. Default logs ~4 lines per pairing (code issued, complete, sent, errors). |
-| `INTAKE_URL` | *(empty)* | Optional: main June server intake endpoint (`https://…/v1/intake/session`). When set (with `INTAKE_KEY`), fresh sessions are pushed to the fleet vault and the returned handle works on **any** June X pairing site. |
+| `INTAKE_URL` | *(empty)* | Optional: main June server intake endpoint (`https://…/v1/intake/session`). When set (with `INTAKE_KEY`), fresh sessions are pushed to the fleet vault and the returned handle works on **any** TEDDY-XMD pairing site. |
 | `INTAKE_KEY` | *(empty)* | The main server's `JUNE_INTAKE_KEY` (sent as Bearer). |
 | `PORT` | `50900` | Listen port |
 
@@ -37,7 +37,7 @@ WhatsApp session server for the **June X** fleet — pairing-code + QR login, sh
 ### Render
 1. New → Web Service → connect this repo
 2. Build `npm install` · Start `npm start` · Health check `/health`
-3. Env vars: set `DATABASE_URL` (the rest have June X defaults)
+3. Env vars: set `DATABASE_URL` (the rest have TEDDY-XMD defaults)
 4. Or import `render.yaml` (Blueprint) — everything pre-filled
 
 ### Koyeb
@@ -49,7 +49,7 @@ WhatsApp session server for the **June X** fleet — pairing-code + QR login, sh
 Deploy button in `app.json`, or:
 ```
 heroku create
-heroku config:set DATABASE_URL=postgres://… SESSION_PREFIX=JUNE-X~
+heroku config:set DATABASE_URL=postgres://… SESSION_PREFIX=TEDDY-XMD~
 git push heroku main
 ```
 
@@ -59,7 +59,7 @@ git push heroku main
 
 When `INTAKE_URL` + `INTAKE_KEY` are configured, pairing on **this** site
 registers the session in the **main** June session server's vault and delivers
-the canonical `JUNE-X~xxxxxx` handle — the same handle a pairing done on the
+the canonical `TEDDY-XMD~xxxxxx` handle — the same handle a pairing done on the
 main site would produce. Bots fetch it by handle exactly as usual, so it does
 not matter which pairing site a user visited. If intake is unset or unreachable,
 the site falls back to its own database IDs.

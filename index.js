@@ -61,17 +61,27 @@ app.get("/health", (req, res) => {
     res.json({
         status: 200,
         success: true,
-        service: "June X Sessions",
+        service: "TEDDY-XMD Sessions",
         storage: isConfigured() ? "database" : "inline-zlib",
         timestamp: new Date().toISOString(),
     });
 });
 
-app.listen(PORT, () => {
-    console.log(
-        `\nDeployment Successful!\n\n June X Session Server running on http://localhost:${PORT}`,
-    );
-    init(config);
-});
+// Do not accept pairing traffic until the session database is actually ready.
+// This prevents issuing handles while storage is disconnected or uninitialized.
+const startServer = async () => {
+    try {
+        await init(config);
+        app.listen(PORT, '0.0.0.0', () => {
+            console.log(`[BOOT] TEDDY-XMD Session Server listening on port ${PORT}`);
+        });
+    } catch (err) {
+        console.error('[BOOT] Session database initialization failed:', err.message);
+        console.error('[BOOT] Set a valid DATABASE_URL in your hosting Config Vars. Server startup aborted.');
+        process.exitCode = 1;
+    }
+};
+
+if (require.main === module) startServer();
 
 module.exports = app;

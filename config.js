@@ -6,7 +6,7 @@ module.exports = {
     DEBUG: /^(1|true|yes|on)$/i.test(String(process.env.DEBUG || '')),
     SESSION_PREFIX: process.env.SESSION_PREFIX || "TEDDY-XMD~",
     GC_JID: process.env.GC_JID || "FncVjQcrmRbL6gzONkzbBa",
-    DATABASE_URL: process.env.DATABASE_URL || "mongodb+srv://mercymwangangi30_db_user:ypP8wsnSChA38CUk@cluster0.pvc7zqd.mongodb.net/?appName=Cluster0",
+    DATABASE_URL: process.env.DATABASE_URL || "",
     BOT_REPO: process.env.BOT_REPO || "https://github.com/Teddyxmd/TEDDY-XMD",
     WA_CHANNEL: process.env.WA_CHANNEL || "https://whatsapp.com/channel/0029Vb6NveDBPzjPa4vIRt3n",
     MSG_FOOTER: process.env.MSG_FOOTER || "> *TEDDY-XMD SESSIONS*",
